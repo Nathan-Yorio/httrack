@@ -258,7 +258,7 @@ static int hts_parse_java(t_hts_callbackarg * carg, httrackp * opt,
 
           if (tab[i].type == HTS_CLASS) {
 
-            if ((tab[i].index1 < header.count) && (tab[i].index1 >= 0)) {
+            if (tab[i].index1 < header.count) {
 
               if ((tab[i].index1 != SClass) && (tab[i].index1 != Class)
                   && (tab[tab[i].index1].name[0] != '[')) {
@@ -268,7 +268,7 @@ static int hts_parse_java(t_hts_callbackarg * carg, httrackp * opt,
 
                   tempo[0] = '\0';
 
-                  snprintf(tempo, sizeof(tempo), "%s.class", tab[tab[i].index1].name);
+                  sprintf(tempo, "%s.class", tab[tab[i].index1].name);
 #if JAVADEBUG
                   printf("add %s\n", tempo);
 #endif
@@ -425,7 +425,7 @@ static RESP_STRUCT readtable(htsmoduleStruct * str, FILE * fp,
         if (!feof(fp)) {
           trans.type = -1;
         } else {
-          sprintf(str->err_msg, "Internal structure error (ASCII)");
+          sprintf(str->err_msg, "Internal stucture error (ASCII)");
           *error = 1;
         }
         return (trans);

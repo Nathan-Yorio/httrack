@@ -76,7 +76,7 @@ Please visit our Website: http://www.httrack.com
 #endif
 #else
 #endif
-
+#include "PlatformFixes.h"
 #undef DEBUG
 #if 0
 #define DEBUG(A) do { A; } while(0)
@@ -152,7 +152,7 @@ int main(int argc, char *argv[]) {
   int defaultPort = 0;
   int parentPid = 0;
 
-  printf("Initializing the server..\n");
+  printf("Initialzing the server..\n");
 
 #ifdef _WIN32
   {
@@ -176,7 +176,7 @@ int main(int argc, char *argv[]) {
   if (argc < 2 || (argc % 2) != 0) {
     fprintf(stderr, "** Warning: use the webhttrack frontend if available\n");
     fprintf(stderr,
-            "usage: %s [--port <port>] [--ppid parent-pid] <path-to-html-root-dir> [key value [key value]..]\n",
+            "usage: %s <path-to-html-root-dir> [--port <port>] [--ppid parent-pid] [key value [key value]..]\n",
             argv[0]);
     fprintf(stderr, "example: %s /usr/share/httrack/\n", argv[0]);
     return 1;
@@ -229,7 +229,7 @@ int main(int argc, char *argv[]) {
   {
     char tmp[32];
 
-    snprintf(tmp, sizeof(tmp), "%d", -1);
+    sprintf(tmp, "%d", -1);
     smallserver_setkey("HTS_PLATFORM", tmp);
   }
   smallserver_setkey("HTTRACK_WEB", HTTRACK_WEB);
@@ -248,7 +248,7 @@ int main(int argc, char *argv[]) {
     char digest[32 + 2];
 
     srand((unsigned int) time(NULL));
-    snprintf(buff, sizeof(buff), "%d-%d", (int) time(NULL), (int) rand());
+    sprintf(buff, "%d-%d", (int) time(NULL), (int) rand());
     domd5mem(buff, strlen(buff), digest, 1);
     smallserver_setkey("sid", digest);
     smallserver_setkey("_sid", digest);
@@ -673,8 +673,8 @@ int __cdecl htsshow_loop(t_hts_callbackarg * carg, httrackp * opt, lien_back * b
                       strncat(proto, back[i].url_adr, count);
                     }
                   }
-                  snprintf(StatsBuffer[index].state, sizeof(StatsBuffer[index].state),
-                          "%s: %s", proto, back[i].info);
+                  sprintf(StatsBuffer[index].state, "%s: %s", proto,
+                          back[i].info);
                   ok = 1;
                 }
                 break;
@@ -771,22 +771,22 @@ int __cdecl htsshow_loop(t_hts_callbackarg * carg, httrackp * opt, lien_back * b
           tmp[0] = '\0';
           switch (hts_is_testing(opt)) {
           case 0:
-            snprintf(tmp, sizeof(tmp), "parsing HTML file (%d%%)", parsing);
+            sprintf(tmp, "parsing HTML file (%d%%)", parsing);
             break;
           case 1:
-            snprintf(tmp, sizeof(tmp), "parsing HTML file: testing links (%d%%)", parsing);
+            sprintf(tmp, "parsing HTML file: testing links (%d%%)", parsing);
             break;
           case 2:
-            snprintf(tmp, sizeof(tmp), "purging files");
+            sprintf(tmp, "purging files");
             break;
           case 3:
-            snprintf(tmp, sizeof(tmp), "loading cache");
+            sprintf(tmp, "loading cache");
             break;
           case 4:
-            snprintf(tmp, sizeof(tmp), "waiting (scheduler)");
+            sprintf(tmp, "waiting (scheduler)");
             break;
           case 5:
-            snprintf(tmp, sizeof(tmp), "waiting (throttle)");
+            sprintf(tmp, "waiting (throttle)");
             break;
           }
           smallserver_setkey("info.currentjob", tmp);

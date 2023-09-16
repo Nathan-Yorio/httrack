@@ -586,8 +586,8 @@ HTS_STATIC char *hts_getCharsetFromContentType(const char *mime) {
 }
 
 #ifdef _WIN32
-#define strcasecmp(a,b) stricmp(a,b)
-#define strncasecmp(a,b,n) strnicmp(a,b,n)
+#define strcasecmp(a,b) _stricmp(a,b)
+#define strncasecmp(a,b,n) _strnicmp(a,b,n)
 #endif
 
 static int is_space(char c) {
@@ -1126,18 +1126,7 @@ char *hts_convertStringIDNAToUTF8(const char *s, size_t size) {
             if (uc < 0x80) {
               ADD_BYTE((char) uc);
             } else {
-              /* emiter (byte per byte) */
-#define EM(C) do { \
-  if (C != -1) {   \
-    ADD_BYTE(C);   \
-  } else {         \
-    FREE_BUFFER(); \
-    return NULL;   \
-  }                \
-} while(0)
-              /* Emit codepoint */
-              EMIT_UNICODE(uc, EM);
-#undef EM
+              EMIT_UNICODE(uc, ADD_BYTE);
             }
           }
         }
@@ -1228,16 +1217,7 @@ char *hts_convertUCS4StringToUTF8(const hts_UCS4 *s, size_t nChars) {
   for(i = 0 ; i < nChars ; i++) {
     const hts_UCS4 uc = s[i];
     /* emitter (byte per byte) */
-#define EM(C) do { \
-  if (C != -1) {   \
-    ADD_BYTE(C);   \
-  } else {         \
-    FREE_BUFFER(); \
-    return NULL;   \
-  }                \
-} while(0)
-    EMIT_UNICODE(uc, EM);
-#undef EM
+    EMIT_UNICODE(uc, ADD_BYTE);
   }
   ADD_BYTE('\0');
 

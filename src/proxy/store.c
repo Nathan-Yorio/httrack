@@ -32,6 +32,7 @@ Please visit our Website: http://www.httrack.com
 #include <time.h>
 
 /* Locking */
+#define WIN32_LEAN_AND_MEAN
 #ifdef _WIN32
 #include <process.h>            /* _beginthread, _endthread */
 #else
@@ -45,8 +46,8 @@ Please visit our Website: http://www.httrack.com
 #include "coucal.h"
 #include "htsmd5.h"
 #undef HTS_INTERNAL_BYTECODE
-#include "../minizip/mztools.h"
-#include "../minizip/zip.h"
+#include "../vendor/minizip/mztools.h"
+#include "../vendor/minizip/zip.h"
 
 #include "htscore.h"
 #include "htsback.h"
@@ -54,7 +55,7 @@ Please visit our Website: http://www.httrack.com
 #include "store.h"
 #include "proxystrings.h"
 #include "proxytrack.h"
-
+#include "PlatformFixes.h"
 /* Unlocked functions */
 
 static int PT_LookupCache__New_u(PT_Index index, const char *url);
@@ -230,7 +231,6 @@ struct _PT_Cache {
   size_t totalSize;
   int count;
 };
-
 PT_Indexes PT_New(void) {
   PT_Indexes index = (PT_Indexes) calloc(sizeof(_PT_Indexes), 1);
 
@@ -1130,7 +1130,7 @@ static PT_Element PT_ReadCache__New_u(PT_Index index_, const char *url,
                   sprintf(previous_save, "%s%s", index->path,
                           previous_save_ + index->fixedPath);
                 } else {
-                  snprintf(r->msg, sizeof(r->msg), "Bogus fixePath prefix for %s (prefixLen=%d)",
+                  sprintf(r->msg, "Bogus fixePath prefix for %s (prefixLen=%d)",
                           previous_save_, (int) index->fixedPath);
                   r->statuscode = STATUSCODE_INVALID;
                 }
@@ -1178,7 +1178,7 @@ static PT_Element PT_ReadCache__New_u(PT_Index index_, const char *url,
                       fclose(fp);
                     } else {
                       r->statuscode = STATUSCODE_INVALID;
-                      snprintf(r->msg, sizeof(r->msg), "Read error (can't open '%s') from cache",
+                      sprintf(r->msg, "Read error (can't open '%s') from cache",
                               file_convert(catbuff, sizeof(catbuff), previous_save));
                     }
                   } else {
@@ -1745,7 +1745,7 @@ static PT_Element PT_ReadCache__Old_u(PT_Index index_, const char *url,
                 sprintf(previous_save, "%s%s", index->path,
                         previous_save_ + index->fixedPath);
               } else {
-                snprintf(r->msg, sizeof(r->msg), "Bogus fixePath prefix for %s (prefixLen=%d)",
+                sprintf(r->msg, "Bogus fixePath prefix for %s (prefixLen=%d)",
                         previous_save_, (int) index->fixedPath);
                 r->statuscode = STATUSCODE_INVALID;
               }
@@ -1931,20 +1931,6 @@ static int getDigit2(const char *const pos) {
 static int getDigit4(const char *const pos) {
   return getDigit(pos[0]) * 1000 + getDigit(pos[1]) * 100 +
     getDigit(pos[2]) * 10 + getDigit(pos[3]);
-}
-
-static time_t getGMT(struct tm *tm) {   /* hey, time_t is local! */
-  time_t t = mktime(tm);
-
-  if (t != (time_t) - 1 && t != (time_t) 0) {
-    /* BSD does not have static "timezone" declared */
-#if (defined(BSD) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__) || defined(__FreeBSD_kernel__))
-    time_t now = time(NULL);
-    time_t timezone = -localtime(&now)->tm_gmtoff;
-#endif
-    return (time_t) (t - timezone);
-  }
-  return (time_t) - 1;
 }
 
 static time_t getArcTimestamp(const char *const line) {

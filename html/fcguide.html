@@ -204,6 +204,7 @@ Action options:
 Proxy options:
   P  proxy use (-P proxy:port or -P user:pass@proxy:port) (--proxy <param>)
  %f *use proxy for ftp (f0 don't use) (--httpproxy-ftp[=N])
+ %C *use proxy for ssl (C0 don't use) (--httpproxy-ssl[=N])
 
 Limits options:
   rN set the mirror depth to N (* r9999) (--depth[=N])
@@ -221,7 +222,7 @@ Flow control:
   TN timeout, number of seconds after a non-responding link is shutdown (--timeout)
   RN number of retries, in case of timeout or non-fatal errors (*R1) (--retries[=N])
   JN traffic jam control, minimum transfert rate (bytes/seconds) tolerated for a link (--min-rate[=N])
-  HN host is abandoned if: 0=never, 1=timeout, 2=slow, 3=timeout or slow (--host-control[=N])
+  HN host is abandonned if: 0=never, 1=timeout, 2=slow, 3=timeout or slow (--host-control[=N])
 
 Links options:
  %P *extended parsing, attempt to parse all links, even in unknown tags or Javascript (%P0 don't use) (--extended-parsing[=N])
@@ -241,7 +242,7 @@ Build options:
   X *purge old files after update (X0 keep delete) (--purge-old[=N])
 
 Spider options:
-  bN accept cookies in cookies.txt (0=do not accept,* 1=accept) (--cookies[=N])
+  bN accept cookies in cookies.txt (0=do not accept,* 1=accept use netscape cookies.txt 2=accept use cookies.json) (--cookies[=N])
   u  check document type if unknown (cgi,asp..) (u0 don't check, * u1 check but /, u2 check always) (--check-type[=N])
   j *parse Java Classes (j0 don't parse) (--parse-java[=N])
   sN follow robots.txt and meta robots tags (0=never,1=sometimes,* 2=always) (--robots[=N])
@@ -299,7 +300,7 @@ Guru options: (do NOT use)
  #R  Old FTP routines (debug)
  #T  Generate transfer ops. log every minutes
  #u  Wait time
- #Z  Generate transfer rate statistics every minutes
+ #Z  Generate transfer rate statictics every minutes
  #!  Execute a shell command (-#! "echo hello")
 
 Command-line specific options:
@@ -315,18 +316,18 @@ Details: Option N
   N5 Images/other in web/xxx and HTML in web/HTML
   N99 All files in web/, with random names (gadget !)
   N100 Site-structure, without www.domain.xxx/
-  N101 Identical to N1 except that "web" is replaced by the site's name
-  N102 Identical to N2 except that "web" is replaced by the site's name
-  N103 Identical to N3 except that "web" is replaced by the site's name
-  N104 Identical to N4 except that "web" is replaced by the site's name
-  N105 Identical to N5 except that "web" is replaced by the site's name
-  N199 Identical to N99 except that "web" is replaced by the site's name
-  N1001 Identical to N1 except that there is no "web" directory
-  N1002 Identical to N2 except that there is no "web" directory
-  N1003 Identical to N3 except that there is no "web" directory (option set for g option)
-  N1004 Identical to N4 except that there is no "web" directory
-  N1005 Identical to N5 except that there is no "web" directory
-  N1099 Identical to N99 except that there is no "web" directory
+  N101 Identical to N1 exept that "web" is replaced by the site's name
+  N102 Identical to N2 exept that "web" is replaced by the site's name
+  N103 Identical to N3 exept that "web" is replaced by the site's name
+  N104 Identical to N4 exept that "web" is replaced by the site's name
+  N105 Identical to N5 exept that "web" is replaced by the site's name
+  N199 Identical to N99 exept that "web" is replaced by the site's name
+  N1001 Identical to N1 exept that there is no "web" directory
+  N1002 Identical to N2 exept that there is no "web" directory
+  N1003 Identical to N3 exept that there is no "web" directory (option set for g option)
+  N1004 Identical to N4 exept that there is no "web" directory
+  N1005 Identical to N5 exept that there is no "web" directory
+  N1099 Identical to N99 exept that there is no "web" directory
 Details: User-defined option N
   %n Name of file without file type (ex: image) (--do-not-recatch)
   %N Name of file, including file type (ex: image.gif)
@@ -407,6 +408,7 @@ site. Specifically, the defauls are:
 <pre>
   w *mirror web sites
  %f *use proxy for ftp (f0 don't use)
+ %C *use proxy for ssl (C0 don't use)
   cN number of multiple connections (*c8)
   RN number of retries, in case of timeout or non-fatal errors (*R1)
  %P *extended parsing, attempt to parse all links, even in unknown tags or Javascript (%P0 don't use)
@@ -441,6 +443,11 @@ for links to other URLs inside it, dowloading them as well.
 <p align=justify> If there are and links to ftp URLs (URLs using the
 file transfer protocol (FTP) rather than the hypertext transfer protocol
 HTTP), go through an ftp proxy server to get them.
+
+<pre><b><i> %C *use proxy for ssl (C0 don't use) </i></b></pre>
+
+<p align=justify> If there are and links to ssl URLs (URLs using HTTPS rather than the hypertext transfer protocol
+HTTP), go through the proxy server to get them.
 
 <pre><b><i>  cN number of multiple connections (*c8) </i></b></pre>
 
@@ -678,7 +685,9 @@ a remote server.
 <pre><b><i>Proxy options:
   P  proxy use (-P proxy:port or -P user:pass@proxy:port)
  %f *use proxy for ftp (f0 don't use)
+ %C *use proxy for ssl (C0 don't use)
 </i></b></pre>
+
 
 <p align=justify> If you are using a standard proxy that doesn't require
 a user ID and password, you would do something like this:
@@ -825,7 +834,7 @@ Flow control:
   TN timeout, number of seconds after a non-responding link is shutdown
   RN number of retries, in case of timeout or non-fatal errors (*R1)
   JN traffic jam control, minimum transfert rate (bytes/seconds) tolerated for a link
-  HN host is abandoned if: 0=never, 1=timeout, 2=slow, 3=timeout or slow
+  HN host is abandonned if: 0=never, 1=timeout, 2=slow, 3=timeout or slow
 </i></b>
 
 <p align=justify> This example allows up to 128 simultaneous downloads. 
@@ -1070,18 +1079,18 @@ Details: Option N
   N5 Images/other in web/xxx and HTML in web/HTML
   N99 All files in web/, with random names (gadget !)
   N100 Site-structure, without www.domain.xxx/
-  N101 Identical to N1 except that "web" is replaced by the site's name
-  N102 Identical to N2 except that "web" is replaced by the site's name
-  N103 Identical to N3 except that "web" is replaced by the site's name
-  N104 Identical to N4 except that "web" is replaced by the site's name
-  N105 Identical to N5 except that "web" is replaced by the site's name
-  N199 Identical to N99 except that "web" is replaced by the site's name
-  N1001 Identical to N1 except that there is no "web" directory
-  N1002 Identical to N2 except that there is no "web" directory
-  N1003 Identical to N3 except that there is no "web" directory (option set for g option)
-  N1004 Identical to N4 except that there is no "web" directory
-  N1005 Identical to N5 except that there is no "web" directory
-  N1099 Identical to N99 except that there is no "web" directory
+  N101 Identical to N1 exept that "web" is replaced by the site's name
+  N102 Identical to N2 exept that "web" is replaced by the site's name
+  N103 Identical to N3 exept that "web" is replaced by the site's name
+  N104 Identical to N4 exept that "web" is replaced by the site's name
+  N105 Identical to N5 exept that "web" is replaced by the site's name
+  N199 Identical to N99 exept that "web" is replaced by the site's name
+  N1001 Identical to N1 exept that there is no "web" directory
+  N1002 Identical to N2 exept that there is no "web" directory
+  N1003 Identical to N3 exept that there is no "web" directory (option set for g option)
+  N1004 Identical to N4 exept that there is no "web" directory
+  N1005 Identical to N5 exept that there is no "web" directory
+  N1099 Identical to N99 exept that there is no "web" directory
 </i></b></pre>
 </ul>
 
@@ -1783,7 +1792,7 @@ based authentication)
 <p align=justify> "On hold" option, in seconds
 
 <pre>
- #Z  Generate transfer rate statistics every minutes
+ #Z  Generate transfer rate statictics every minutes
 </pre>
 
 <p align=justify> Generate a log file with transfer statistics

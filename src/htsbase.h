@@ -63,7 +63,7 @@ extern "C" {
 #endif
 #include <assert.h>
 
-/* GCC extension */
+	/* GCC extension */
 #ifndef HTS_UNUSED
 #ifdef __GNUC__
 #define HTS_UNUSED __attribute__ ((unused))
@@ -80,13 +80,11 @@ extern "C" {
 
 #undef min
 #undef max
-#define min(a,b) ((a)>(b)?(b):(a))
-#define max(a,b) ((a)>(b)?(a):(b))
+#define max(a,b) ((a)<(b)?(b):(a))
+#define min(a,b) ((a)<(b)?(a):(b))
 
 #ifndef _WIN32
 #undef Sleep
-#define min(a,b) ((a)>(b)?(b):(a))
-#define max(a,b) ((a)>(b)?(a):(b))
 #define Sleep(a) { if (((a)*1000)%1000000) usleep(((a)*1000)%1000000); if (((a)*1000)/1000000) sleep(((a)*1000)/1000000); }
 #endif
 

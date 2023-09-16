@@ -41,14 +41,14 @@ Please visit our Website: http://www.httrack.com
 
 #if HTS_USEZLIB
 /* zlib */
-/*
+
 #include <zlib.h>
 #include "htszlib.h"
-*/
+#include "PlatformFixes.h"
 
 /*
   Unpack file into a new file
-  Return value: size of the new file, or -1 if an error occurred
+  Return value: size of the new file, or -1 if an error occured
 */
 /* Note: utf-8 */
 int hts_zunpack(char *filename, char *newfile) {

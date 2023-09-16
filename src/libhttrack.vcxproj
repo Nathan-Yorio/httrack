@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\StoneSteps.zLib.Static.1.2.12.1\build\native\StoneSteps.zLib.Static.props" Condition="Exists('..\..\packages\StoneSteps.zLib.Static.1.2.12.1\build\native\StoneSteps.zLib.Static.props')" />
+  <Import Project="..\..\packages\openssl-native.1.0.0\build\native\openssl-native.props" Condition="Exists('..\..\packages\openssl-native.1.0.0\build\native\openssl-native.props')" />
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <ProjectGuid>{E76AD871-54C1-45E8-A657-6117ADEFFB46}</ProjectGuid>
+    <RootNamespace>libhttrack</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>17.0.32505.173</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>vendor;vendor/coucal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;_USRDLL;LIBHTTRACK_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapExports>true</MapExports>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>vendor;vendor/coucal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;_USRDLL;LIBHTTRACK_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapExports>true</MapExports>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>vendor;vendor/coucal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;_USRDLL;LIBHTTRACK_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <SupportJustMyCode>true</SupportJustMyCode>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateMapFile>true</GenerateMapFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <MapExports>true</MapExports>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>vendor;vendor/coucal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;_USRDLL;LIBHTTRACK_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <TreatSpecificWarningsAsErrors>4013;%(TreatSpecificWarningsAsErrors)</TreatSpecificWarningsAsErrors>
+      <Optimization>Disabled</Optimization>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateMapFile>true</GenerateMapFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <MapExports>true</MapExports>
+      <AssemblyDebug>true</AssemblyDebug>
+      <StackReserveSize>
+      </StackReserveSize>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="vendor\cJSON\cJSON.c" />
+    <ClCompile Include="vendor\path-join\path-join.c" />
+    <ClCompile Include="vendor\path-join\str-ends-with.c" />
+    <ClCompile Include="vendor\path-join\str-starts-with.c" />
+    <ClCompile Include="vendor\coucal\coucal.c" />
+    <ClCompile Include="htsalias.c" />
+    <ClCompile Include="htsback.c" />
+    <ClCompile Include="htsbauth.c" />
+    <ClCompile Include="htscache.c" />
+    <ClCompile Include="htscatchurl.c" />
+    <ClCompile Include="htscharset.c" />
+    <ClCompile Include="htsconcat.c" />
+    <ClCompile Include="htscore.c" />
+    <ClCompile Include="htscoremain.c" />
+    <ClCompile Include="htsencoding.c" />
+    <ClCompile Include="htsfilters.c" />
+    <ClCompile Include="htsftp.c" />
+    <ClCompile Include="htshash.c" />
+    <ClCompile Include="htshelp.c" />
+    <ClCompile Include="htsindex.c" />
+    <ClCompile Include="htslib.c" />
+    <ClCompile Include="htsmd5.c" />
+    <ClCompile Include="htsmodules.c" />
+    <ClCompile Include="htsname.c" />
+    <ClCompile Include="htsparse.c" />
+    <ClCompile Include="htsrobots.c" />
+    <ClCompile Include="htsthread.c" />
+    <ClCompile Include="htstools.c" />
+    <ClCompile Include="htswizard.c" />
+    <ClCompile Include="htswrap.c" />
+    <ClCompile Include="htszlib.c" />
+    <ClCompile Include="httrack.c" />
+    <ClCompile Include="md5.c" />
+    <ClCompile Include="vendor\minizip\ioapi.c" />
+    <ClCompile Include="vendor\minizip\iowin32.c" />
+    <ClCompile Include="vendor\minizip\mztools.c" />
+    <ClCompile Include="vendor\minizip\unzip.c" />
+    <ClCompile Include="vendor\minizip\zip.c" />
+    <ClCompile Include="PlatformFixes.c" />
+    <ClCompile Include="punycode.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="vendor\cJSON\cJSON.h" />
+    <ClInclude Include="vendor\path-join\path-join.h" />
+    <ClInclude Include="vendor\path-join\str-ends-with.h" />
+    <ClInclude Include="vendor\path-join\str-starts-with.h" />
+    <ClInclude Include="vendor\coucal\coucal.h" />
+    <ClInclude Include="hts-indextmpl.h" />
+    <ClInclude Include="htsalias.h" />
+    <ClInclude Include="htsback.h" />
+    <ClInclude Include="htsbase.h" />
+    <ClInclude Include="htsbasenet.h" />
+    <ClInclude Include="htsbauth.h" />
+    <ClInclude Include="htscache.h" />
+    <ClInclude Include="htscatchurl.h" />
+    <ClInclude Include="htsconfig.h" />
+    <ClInclude Include="htscore.h" />
+    <ClInclude Include="htscoremain.h" />
+    <ClInclude Include="htsdefines.h" />
+    <ClInclude Include="htsfilters.h" />
+    <ClInclude Include="htsftp.h" />
+    <ClInclude Include="htsglobal.h" />
+    <ClInclude Include="htshash.h" />
+    <ClInclude Include="htshelp.h" />
+    <ClInclude Include="htsindex.h" />
+    <ClInclude Include="htslib.h" />
+    <ClInclude Include="htsmd5.h" />
+    <ClInclude Include="htsmodules.h" />
+    <ClInclude Include="htsname.h" />
+    <ClInclude Include="htsnet.h" />
+    <ClInclude Include="htsopt.h" />
+    <ClInclude Include="htsparse.h" />
+    <ClInclude Include="htsrobots.h" />
+    <ClInclude Include="htsstrings.h" />
+    <ClInclude Include="htsthread.h" />
+    <ClInclude Include="htstools.h" />
+    <ClInclude Include="htswizard.h" />
+    <ClInclude Include="htswrap.h" />
+    <ClInclude Include="htszlib.h" />
+    <ClInclude Include="httrack-library.h" />
+    <ClInclude Include="httrack.h" />
+    <ClInclude Include="md5.h" />
+    <ClInclude Include="vendor\minizip\crypt.h" />
+    <ClInclude Include="vendor\minizip\ioapi.h" />
+    <ClInclude Include="vendor\minizip\iowin32.h" />
+    <ClInclude Include="vendor\minizip\mztools.h" />
+    <ClInclude Include="vendor\minizip\unzip.h" />
+    <ClInclude Include="vendor\minizip\zip.h" />
+    <ClInclude Include="mmsrip\common.h" />
+    <ClInclude Include="punycode.h" />
+    <ClInclude Include="PlatformFixes.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="changelog.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\..\packages\openssl-native.1.0.0\build\native\openssl-native.targets" Condition="Exists('..\..\packages\openssl-native.1.0.0\build\native\openssl-native.targets')" />
+    <Import Project="..\..\packages\StoneSteps.zLib.Static.1.2.12.1\build\native\StoneSteps.zLib.Static.targets" Condition="Exists('..\..\packages\StoneSteps.zLib.Static.1.2.12.1\build\native\StoneSteps.zLib.Static.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\openssl-native.1.0.0\build\native\openssl-native.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\openssl-native.1.0.0\build\native\openssl-native.props'))" />
+    <Error Condition="!Exists('..\..\packages\openssl-native.1.0.0\build\native\openssl-native.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\openssl-native.1.0.0\build\native\openssl-native.targets'))" />
+    <Error Condition="!Exists('..\..\packages\StoneSteps.zLib.Static.1.2.12.1\build\native\StoneSteps.zLib.Static.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\StoneSteps.zLib.Static.1.2.12.1\build\native\StoneSteps.zLib.Static.props'))" />
+    <Error Condition="!Exists('..\..\packages\StoneSteps.zLib.Static.1.2.12.1\build\native\StoneSteps.zLib.Static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\StoneSteps.zLib.Static.1.2.12.1\build\native\StoneSteps.zLib.Static.targets'))" />
+  </Target>
+</Project>

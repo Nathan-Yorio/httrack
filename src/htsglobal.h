@@ -36,8 +36,8 @@ Please visit our Website: http://www.httrack.com
 #define HTTRACK_GLOBAL_DEFH
 
 // Version (also check external version information)
-#define HTTRACK_VERSION      "3.49-4"
-#define HTTRACK_VERSIONID    "3.49.4"
+#define HTTRACK_VERSION      "3.49-2"
+#define HTTRACK_VERSIONID    "3.49.2"
 #define HTTRACK_AFF_VERSION  "3.x"
 #define HTTRACK_LIB_VERSION  "2.0"
 
@@ -92,6 +92,10 @@ Please visit our Website: http://www.httrack.com
 #else
 
 #include "config.h"
+
+#ifndef FTIME
+#define HTS_DO_NOT_USE_FTIME
+#endif
 
 #ifndef SETUID
 #define HTS_DO_NOT_USE_UID
@@ -202,11 +206,14 @@ Please visit our Website: http://www.httrack.com
 /* Taille max ligne de commande (>=HTS_URLMAXSIZE*2) */
 #define HTS_CDLMAXSIZE 1024
 
+
+#define HTS_HEADER_LINE_MAX_SIZE 1024*1024
+
 /* Copyright (C) 1998-2017 Xavier Roche and other contributors */
-#define HTTRACK_AFF_AUTHORS "[XR&CO'2014]"
-#define HTS_DEFAULT_FOOTER "<!-- Mirrored from %s%s by HTTrack Website Copier/" HTTRACK_AFF_VERSION " " HTTRACK_AFF_AUTHORS ", %s -->"
+#define HTTRACK_AFF_AUTHORS "[XR&CO'2022]"
+#define HTS_DEFAULT_FOOTER "<!-- Mirrored from %s%s by HTTrack Website Copier/"HTTRACK_AFF_VERSION" "HTTRACK_AFF_AUTHORS", %s -->"
 #define HTTRACK_WEB "http://www.httrack.com"
-#define HTS_UPDATE_WEBSITE "http://www.httrack.com/update.php3?Product=HTTrack&Version=" HTTRACK_VERSIONID "&VersionStr=" HTTRACK_VERSION "&Platform=%d&Language=%s"
+#define HTS_UPDATE_WEBSITE "http://www.httrack.com/update.php3?Product=HTTrack&Version="HTTRACK_VERSIONID"&VersionStr="HTTRACK_VERSION"&Platform=%d&Language=%s"
 
 #define H_CRLF "\x0d\x0a"
 #define CRLF   "\x0d\x0a"
@@ -381,10 +388,10 @@ typedef unsigned long int t_htsboundary;
 typedef struct mlink mlink;
 #endif
 struct mlink {
-  char *adr;
-  int len;
-  int id;
-  struct mlink *next;
+	char* adr;
+	int len;
+	int id;
+	struct mlink* next;
 };
 static const t_htsboundary htsboundary = 0xDEADBEEF;
 #endif
@@ -446,7 +453,7 @@ static const t_htsboundary htsboundary = 0xDEADBEEF;
 #define _HTS_WIDE 1
 #endif
 #if _HTS_WIDE
-extern FILE *DEBUG_fp;
+extern FILE* DEBUG_fp;
 
 #define DEBUG_W(A)  { if (DEBUG_fp==NULL) DEBUG_fp=fopen("bug.out","wb"); fprintf(DEBUG_fp,":>"A); fflush(DEBUG_fp); }
 #undef _

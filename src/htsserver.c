@@ -44,6 +44,7 @@ Please visit our Website: http://www.httrack.com
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include "path-join/path-join.h"
 #include <fcntl.h>
 #ifdef _WIN32
 #else
@@ -52,6 +53,7 @@ Please visit our Website: http://www.httrack.com
 #ifndef _WIN32
 #include <signal.h>
 #endif
+#include "PlatformFixes.h"
 /* END specific definitions */
 
 /* définitions globales */
@@ -80,7 +82,7 @@ coucal NewLangList = NULL;
 /* Language files */
 
 #include "htsserver.h"
-
+#include "PlatformFixes.h"
 const char *gethomedir(void);
 int commandRunning = 0;
 int commandEndRequested = 0;
@@ -347,7 +349,7 @@ int smallserver(T_SOC soc, char *url, char *method, char *data, char *path) {
       /* */
       {"connexion", 4},
       /* */
-      {"maxrate", 100000},
+      {"maxrate", 25000},
       /* */
       {"build", 1},
       /* */
@@ -359,7 +361,7 @@ int smallserver(T_SOC soc, char *url, char *method, char *data, char *path) {
     initStrElt initStr[] = {
       {"user", "Mozilla/4.5 (compatible; HTTrack 3.0x; Windows 98)"},
       {"footer",
-       "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [XR&CO'2014], %s -->"},
+       "<!-- Mirrored from %s%s by HTTrack Website Copier/3.x [HTTRACK_AFF_AUTHORS], %s -->"},
       {"url2", "+*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/*"},
       {NULL, NULL}
     };
@@ -1515,7 +1517,11 @@ static int htslang_load(char *limit_to, const char *path) {
   /* Load master file (list of keys and internal keys) */
   if (!limit_to) {
     const char *mname = "lang.def";
-    FILE *fp = fopen(fconcat(catbuff, sizeof(catbuff), path, mname), "rb");
+	char* pj;
+	pj= path_join(path, mname);
+	strcpy_s(catbuff, CATBUFF_SIZE, pj);
+	free(pj);
+	FILE *fp = fopen(catbuff, "rb");
 
     if (fp) {
       char intkey[8192];

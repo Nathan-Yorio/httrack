@@ -1,9 +1,9 @@
 AC_PREREQ(2.59)
 
-AC_INIT([httrack], [3.49.4], [roche+packaging@httrack.com], [httrack], [http://www.httrack.com/])
+AC_INIT([httrack], [3.49.2], [roche+packaging@httrack.com], [httrack], [http://www.httrack.com/])
 AC_COPYRIGHT([
 HTTrack Website Copier, Offline Browser for Windows and Unix
-Copyright (C) 1998-2015 Xavier Roche and other contributors
+Copyright (C) 1998-2018 Xavier Roche and other contributors
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ Please visit our Website: http://www.httrack.com
 AC_CONFIG_SRCDIR(src/httrack.c)
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_HEADERS(config.h)
-AM_INIT_AUTOMAKE([subdir-objects])
+AM_INIT_AUTOMAKE([foreign subdir-objects])
 VERSION_INFO="2:49:0"
 AM_MAINTAINER_MODE
 AC_USE_SYSTEM_EXTENSIONS
@@ -55,8 +55,11 @@ AC_SUBST(VERSION_INFO)
 DEFAULT_CFLAGS="-Wall -Wformat -Wformat-security \
 -Wmultichar -Wwrite-strings -Wcast-qual -Wcast-align \
 -Wstrict-prototypes -Wmissing-prototypes \
--Wmissing-declarations -Wdeclaration-after-statement \
+-Wmissing-declarations \
 -Wpointer-arith -Wsequence-point -Wnested-externs \
+-Wtype-limits -Werror-implicit-function-declaration \
+-Wno-format-overflow \
+-Wno-format-truncation -Wno-stringop-truncation \
 -D_REENTRANT"
 AC_SUBST(DEFAULT_CFLAGS)
 DEFAULT_LDFLAGS=""
@@ -74,21 +77,8 @@ AX_CHECK_COMPILE_FLAG([-Wmissing-parameter-type], [DEFAULT_CFLAGS="$DEFAULT_CFLA
 AX_CHECK_COMPILE_FLAG([-Wold-style-definition], [DEFAULT_CFLAGS="$DEFAULT_CFLAGS -Wold-style-definition"])
 AX_CHECK_COMPILE_FLAG([-Wignored-qualifiers], [DEFAULT_CFLAGS="$DEFAULT_CFLAGS -Wignored-qualifiers"])
 AX_CHECK_COMPILE_FLAG([-fstrict-aliasing -Wstrict-aliasing], [DEFAULT_CFLAGS="$DEFAULT_CFLAGS -fstrict-aliasing -Wstrict-aliasing"])
-AX_CHECK_COMPILE_FLAG([-fstack-protector], [DEFAULT_CFLAGS="$DEFAULT_CFLAGS -fstack-protector"])
-AX_CHECK_COMPILE_FLAG([-fstack-clash-protection], [DEFAULT_CFLAGS="$DEFAULT_CFLAGS -fstack-clash-protection"])
-AX_CHECK_COMPILE_FLAG([-fcf-protection], [DEFAULT_CFLAGS="$DEFAULT_CFLAGS -fcf-protection"])
-AX_CHECK_LINK_FLAG([-Wl,--discard-all], [DEFAULT_LDFLAGS="$DEFAULT_LDFLAGS -Wl,--discard-all"])
-AX_CHECK_LINK_FLAG([-Wl,--no-undefined], [DEFAULT_LDFLAGS="$DEFAULT_LDFLAGS -Wl,--no-undefined"])
-AX_CHECK_LINK_FLAG([-Wl,-z,relro,-z,now], [DEFAULT_LDFLAGS="$DEFAULT_LDFLAGS -Wl,-z,relro,-z,now"])
-AX_CHECK_LINK_FLAG([-Wl,-z,noexecstack], [DEFAULT_LDFLAGS="$DEFAULT_LDFLAGS -Wl,-z,noexecstack"])
-
-### PIE
-CFLAGS_PIE=""
-LDFLAGS_PIE=""
-AX_CHECK_COMPILE_FLAG([-fpie -pie], [CFLAGS_PIE="-fpie -pie"])
-AX_CHECK_LINK_FLAG([-pie], [LDFLAGS_PIE="-pie"])
-AC_SUBST([CFLAGS_PIE])
-AC_SUBST([LDFLAGS_PIE])
+AX_CHECK_LINK_FLAG([-Wl,--discard-all], [DEFAULT_LDLAGS="$DEFAULT_LDLAGS -Wl,--discard-all"])
+AX_CHECK_LINK_FLAG([-Wl,--no-undefined], [DEFAULT_LDLAGS="$DEFAULT_LDLAGS -Wl,--no-undefined"])
 
 ## Export all symbols for backtraces
 AX_CHECK_COMPILE_FLAG([-rdynamic], [DEFAULT_CFLAGS="$DEFAULT_CFLAGS -rdynamic"])
@@ -153,7 +143,7 @@ AC_ARG_ENABLE([https],
 	*)
 		AC_MSG_ERROR(bad value for https, expected yes/no/auto)
 		;;
-	esac	
+	esac
 	],
 	[
 	https_support=yes
@@ -239,6 +229,10 @@ AC_CHECK_LIB(c, dlopen, [DL_LIBS=
 AC_DEFINE(DLLIB, 1,[Check for dlopen in c])], AC_MSG_WARN([*** not found * this is bad]))
 AC_SUBST(DL_LIBS)
 fi
+
+### Check for ftime
+AC_CHECK_LIB(c, ftime, [
+AC_DEFINE(FTIME, 1,[Check for ftime])], AC_MSG_RESULT([not found]))
 
 ### Check for setuid
 AC_CHECK_LIB(c, setuid, [
